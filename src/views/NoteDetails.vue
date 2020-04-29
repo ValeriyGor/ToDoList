@@ -135,8 +135,22 @@
         },
         methods: {
             removeNote() {
-                this.$store.dispatch('removeNote', this.noteIndex);
-                this.$router.push('/');
+                this.$swal.fire({
+                    title: "Вы уверены",
+                    text: "Подтвердите действие",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "Да, удалить",
+                    cancelButtonText: "Отменить"
+                }).then((result) => {
+                    if (result.value) {
+                        this.$store.dispatch('removeNote', this.noteIndex);
+                        this.$router.push('/');
+                    }
+                })
+
             },
             addToDo() {
                 this.noteData.todoList.push({title: "", done: false});
